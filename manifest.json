@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.davidojedalopez.fear-greed",
+  "name": "Market Fear & Greed",
+  "version": "1.0.0",
+  "author": "David Ojeda",
+  "license": "MIT",
+  "description": "The CNN US stock-market Fear & Greed Index in the Omarchy bar.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Market Fear & Greed",
+    "description": "Show the latest US stock-market sentiment reading published by CNN.",
+    "category": "Info",
+    "allowMultiple": false,
+    "defaultSection": "center"
+  }
+}
+

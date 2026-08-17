@@ -1,0 +1,38 @@
+name: CNN source failure
+description: Report HTTP blocking or a changed CNN response
+title: "[Source]: "
+labels: [source]
+body:
+  - type: markdown
+    attributes:
+      value: Do not propose proxies, CAPTCHA bypasses, or identity rotation.
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: date
+    attributes:
+      label: Date and timezone observed
+    validations:
+      required: true
+  - type: dropdown
+    id: message
+    attributes:
+      label: Plugin message
+      options:
+        - CNN blocked the data request
+        - CNN request timed out
+        - CNN returned an unexpected response
+        - CNN returned invalid JSON
+        - Other fixed error
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional sanitized details
+

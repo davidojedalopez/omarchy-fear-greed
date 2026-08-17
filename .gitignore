@@ -1,0 +1,4 @@
+*.qmlc
+*.junit.xml
+result*
+

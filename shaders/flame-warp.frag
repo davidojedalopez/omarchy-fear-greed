@@ -59,14 +59,9 @@ void main()
                                 ubuf.time * 0.62));
   float tongues = turbulence(vec2(bentX * 10.5 - ubuf.time * 0.52,
                                   ubuf.time * 1.18));
-  float phaseWarp = (broad - 0.5) * 5.5 + (tongues - 0.5) * 2.8;
-  float tongueWave = 0.5 + 0.5 * sin(bentX * 38.0
-                                     + ubuf.time * 1.85 + phaseWarp);
-  float needleWave = 0.5 + 0.5 * sin(bentX * 71.0
-                                     - ubuf.time * 2.65 + phaseWarp * 1.4);
-  float peaks = max(pow(tongueWave, 4.2), pow(needleWave, 6.0) * 0.78);
-  float crown = 0.18 + 0.17 * broad + 0.53 * peaks;
-  crown = clamp(crown, 0.16, 0.86);
+  float crown = 0.20 + 0.48 * pow(broad, 1.55)
+              + 0.20 * (tongues - 0.46);
+  crown = clamp(crown, 0.16, 0.82);
 
   float boundaryNoise = turbulence(vec2(bentX * 14.0 + ubuf.time * 0.86,
                                         heightFromBase * 5.5 - ubuf.time * 2.35));
@@ -88,10 +83,10 @@ void main()
                      + (1.0 - heightFromBase) * 0.92
                      + (innerNoise - 0.5) * 0.34, 0.0, 1.0);
 
-  vec3 deepRed = vec3(0.76, 0.018, 0.0);
-  vec3 orange = vec3(1.0, 0.12, 0.0);
-  vec3 yellow = vec3(1.0, 0.58, 0.0);
-  vec3 whiteHot = vec3(1.0, 0.91, 0.24);
+  vec3 deepRed = vec3(0.83, 0.035, 0.0);
+  vec3 orange = vec3(1.0, 0.20, 0.0);
+  vec3 yellow = vec3(1.0, 0.78, 0.04);
+  vec3 whiteHot = vec3(1.0, 0.96, 0.58);
   vec3 flameColor = mix(deepRed, orange, smoothstep(0.0, 0.38, heat));
   flameColor = mix(flameColor, yellow, smoothstep(0.30, 0.72, heat));
   flameColor = mix(flameColor, whiteHot, smoothstep(0.72, 1.0, heat));

@@ -8,6 +8,7 @@ layout(std140, binding = 0) uniform buf {
   float qt_Opacity;
   float time;
   float strength;
+  float heightScale;
 } ubuf;
 
 float randomValue(vec2 point)
@@ -61,7 +62,7 @@ void main()
                                   ubuf.time * 1.18));
   float crown = 0.20 + 0.48 * pow(broad, 1.55)
               + 0.20 * (tongues - 0.46);
-  crown = clamp(crown, 0.16, 0.82);
+  crown = clamp(crown * ubuf.heightScale, 0.14, 0.90);
 
   float boundaryNoise = turbulence(vec2(bentX * 14.0 + ubuf.time * 0.86,
                                         heightFromBase * 5.5 - ubuf.time * 2.35));

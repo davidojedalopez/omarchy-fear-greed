@@ -5,7 +5,6 @@ Item {
 
   property bool running: false
   property real intensity: 0
-  property real glowPulse: 0
   property real turbulenceTime: 0
 
   readonly property url assetSource: Qt.resolvedUrl("assets/flame-bed.svg")
@@ -13,16 +12,13 @@ Item {
   readonly property url shaderSource: Qt.resolvedUrl("shaders/flame-warp.frag.qsb")
   readonly property bool assetReady: shaderSourceImage.status === Image.Ready
   readonly property bool animationsRunning: running && intensity > 0
+  readonly property real normalizedIntensity: Math.max(0, Math.min(1, intensity))
+  readonly property real flameHeightScale: 0.70 + 0.50 * normalizedIntensity
+  readonly property real flameOpacity: 0.44 + 0.56 * normalizedIntensity
+  readonly property real turbulenceStrength: 0.55 + 0.55 * normalizedIntensity
 
   visible: animationsRunning
   clip: true
-
-  SequentialAnimation on glowPulse {
-    running: root.animationsRunning
-    loops: Animation.Infinite
-    NumberAnimation { from: 0; to: 1; duration: 620; easing.type: Easing.InOutSine }
-    NumberAnimation { from: 1; to: 0; duration: 760; easing.type: Easing.InOutSine }
-  }
 
   NumberAnimation on turbulenceTime {
     running: root.animationsRunning
@@ -51,18 +47,10 @@ Item {
     id: proceduralFlames
     anchors.fill: parent
     property real time: root.turbulenceTime
-    property real strength: 0.72 + 0.28 * root.intensity
+    property real strength: root.turbulenceStrength
+    property real heightScale: root.flameHeightScale
     fragmentShader: root.shaderSource
-    opacity: 0.44 + 0.56 * root.intensity
+    opacity: root.flameOpacity
   }
 
-  Rectangle {
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.bottom: parent.bottom
-    height: 5
-    radius: 2
-    color: "#f97316"
-    opacity: 0.42 + 0.22 * root.intensity + 0.12 * root.glowPulse
-  }
 }

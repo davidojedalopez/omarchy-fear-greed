@@ -98,6 +98,18 @@ TestCase {
     tryCompare(item, "animationsRunning", false)
   }
 
+  function test_fireBedProminenceTracksFearIntensity() {
+    var moderate = createTemporaryObject(fireBedComponent, testCase,
+                                         { running: true, intensity: 0.5 })
+    var extreme = createTemporaryObject(fireBedComponent, testCase,
+                                        { running: true, intensity: 1.0 })
+    verify(moderate !== null)
+    verify(extreme !== null)
+    verify(extreme.flameHeightScale > moderate.flameHeightScale)
+    verify(extreme.flameOpacity > moderate.flameOpacity)
+    verify(extreme.turbulenceStrength > moderate.turbulenceStrength)
+  }
+
   function test_switchingBandsResetsRunningState() {
     var item = effect({ score: 10, active: true, animationMode: "Full" })
     verify(item.fearRunning)

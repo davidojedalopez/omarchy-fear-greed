@@ -17,6 +17,15 @@ TestCase {
     }
   }
 
+  Component {
+    id: fireBedComponent
+
+    Plugin.FireBed {
+      width: 330
+      height: 132
+    }
+  }
+
   function effect(properties) {
     var item = createTemporaryObject(effectsComponent, testCase, properties || {})
     verify(item !== null)
@@ -27,16 +36,19 @@ TestCase {
     var item = effect({ score: 10, active: false, animationMode: "Full" })
     verify(!item.fearRunning)
     verify(!item.greedRunning)
+    verify(!item.fireBedRunning)
     compare(item.fearEmitRate, 0)
+    compare(item.coinEmitRate, 0)
   }
 
   function test_fearRunsOnlyForFear() {
     var item = effect({ score: 10, active: true, animationMode: "Full" })
     compare(item.effect, "fear")
     verify(item.fearRunning)
+    verify(item.fireBedRunning)
     verify(!item.greedRunning)
-    verify(item.fearEmitRate >= 4)
-    verify(item.fearEmitRate <= 8)
+    verify(item.fearEmitRate >= 1.5)
+    verify(item.fearEmitRate <= 3)
   }
 
   function test_neutralDoesNotRun() {
@@ -50,15 +62,19 @@ TestCase {
     var item = effect({ score: 90, active: true, animationMode: "Full" })
     compare(item.effect, "greed")
     verify(!item.fearRunning)
+    verify(!item.fireBedRunning)
     verify(item.greedRunning)
     verify(item.greedEmitRate >= 2)
     verify(item.greedEmitRate <= 5)
+    verify(item.coinEmitRate >= 1.2)
+    verify(item.coinEmitRate <= 3)
   }
 
   function test_subtleHalvesEmission() {
     var full = effect({ score: 90, active: true, animationMode: "Full" })
     var subtle = effect({ score: 90, active: true, animationMode: "Subtle" })
     fuzzyCompare(subtle.greedEmitRate, full.greedEmitRate / 2, 0.0001)
+    fuzzyCompare(subtle.coinEmitRate, full.coinEmitRate / 2, 0.0001)
     verify(subtle.particleAlpha < full.particleAlpha)
   }
 
@@ -66,15 +82,35 @@ TestCase {
     var item = effect({ score: 10, active: true, animationMode: "Off" })
     verify(!item.fearRunning)
     verify(!item.greedRunning)
+    verify(!item.fireBedRunning)
     compare(item.modeScale, 0)
+  }
+
+  function test_fireBedRunsContinuouslyOnlyWhenEnabled() {
+    var item = createTemporaryObject(fireBedComponent, testCase,
+                                     { running: true, intensity: 0.8 })
+    verify(item !== null)
+    verify(String(item.assetSource).indexOf("assets/flame-bed.svg") >= 0)
+    verify(String(item.rigSource).indexOf("assets/flame-bed-rig.svg") >= 0)
+    verify(String(item.shaderSource).indexOf("shaders/flame-warp.frag.qsb") >= 0)
+    tryCompare(item, "assetReady", true)
+    tryCompare(item, "animationsRunning", true)
+    var initialTime = item.turbulenceTime
+    tryVerify(function() { return item.turbulenceTime > initialTime })
+    item.running = false
+    tryCompare(item, "animationsRunning", false)
   }
 
   function test_switchingBandsResetsRunningState() {
     var item = effect({ score: 10, active: true, animationMode: "Full" })
     verify(item.fearRunning)
+    compare(findChild(item, "fearParticles").opacity, 1)
     item.score = 90
     tryCompare(item, "greedRunning", true)
     verify(!item.fearRunning)
+    compare(findChild(item, "fearParticles").opacity, 0)
+    compare(findChild(item, "moneyParticles").opacity, 1)
+    compare(findChild(item, "coinParticles").opacity, 1)
     item.active = false
     tryCompare(item, "greedRunning", false)
   }

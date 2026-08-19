@@ -37,6 +37,44 @@ TestCase {
     compare(Model.classificationForValue(100), "Extreme Greed")
   }
 
+  function test_effectBands() {
+    compare(Model.effectForValue(-1), "none")
+    compare(Model.effectForValue(0), "fear")
+    compare(Model.effectForValue(24), "fear")
+    compare(Model.effectForValue(25), "fear")
+    compare(Model.effectForValue(44), "fear")
+    compare(Model.effectForValue(45), "none")
+    compare(Model.effectForValue(55), "none")
+    compare(Model.effectForValue(56), "greed")
+    compare(Model.effectForValue(74), "greed")
+    compare(Model.effectForValue(75), "greed")
+    compare(Model.effectForValue(100), "greed")
+  }
+
+  function test_effectIntensity() {
+    compare(Model.effectIntensityForValue(45), 0)
+    compare(Model.effectIntensityForValue(55), 0)
+    compare(Model.effectIntensityForValue(-1), 0)
+    verify(Model.effectIntensityForValue(0) > Model.effectIntensityForValue(24))
+    verify(Model.effectIntensityForValue(24) > Model.effectIntensityForValue(44))
+    verify(Model.effectIntensityForValue(100) > Model.effectIntensityForValue(75))
+    verify(Model.effectIntensityForValue(75) > Model.effectIntensityForValue(56))
+    fuzzyCompare(Model.effectIntensityForValue(0), 1, 0.0001)
+    fuzzyCompare(Model.effectIntensityForValue(44), 0.5, 0.0001)
+    fuzzyCompare(Model.effectIntensityForValue(56), 0.4, 0.0001)
+    fuzzyCompare(Model.effectIntensityForValue(100), 1, 0.0001)
+  }
+
+  function test_animationModes() {
+    compare(Model.normalizedAnimationMode("Full"), "Full")
+    compare(Model.normalizedAnimationMode("subtle"), "Subtle")
+    compare(Model.normalizedAnimationMode("OFF"), "Off")
+    compare(Model.normalizedAnimationMode("unexpected"), "Full")
+    compare(Model.animationModeScale("Full"), 1)
+    compare(Model.animationModeScale("Subtle"), 0.5)
+    compare(Model.animationModeScale("Off"), 0)
+  }
+
   function test_validPayload() {
     var result = Model.parseCnnPayload(validPayload())
     verify(result.ok)

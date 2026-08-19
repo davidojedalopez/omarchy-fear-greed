@@ -13,11 +13,16 @@ Before opening a pull request:
 
    ```bash
    omarchy plugin validate .
-   qmllint -I /usr/share/omarchy/shell BarWidget.qml Panel.qml Model.js
+   qmllint -I /usr/share/omarchy/shell -I . SentimentEffects.qml Panel.qml Model.js
    QT_QPA_PLATFORM=offscreen qmltestrunner -input tests -o -,txt
+   qml6 tests/EffectsPreview.qml
    ```
+
+The preview cycles through representative Fear, Neutral, and Greed scores
+without reading or writing the production CNN cache. Click the card to advance,
+press Space to change animation mode, or use 1–5 to jump to a score band. Pass a
+starting score after `--`, for example `qml6 tests/EffectsPreview.qml -- 90`.
 
 CNN's endpoint is unsupported. Changes intended to defeat new blocking
 mechanisms will not be accepted. Source failures should degrade to stale cached
 data and a clear error.
-

@@ -7,6 +7,7 @@ An Omarchy bar widget for the US stock-market Fear & Greed Index published by CN
 ## What it shows
 
 - The latest index as a color-coded gauge.
+- Animated flames for Fear and falling money for Greed while the panel is open.
 - Previous close, one week ago, one month ago, and one year ago as colored numbers.
 - CNN's publication timestamp so weekends and market holidays are clear.
 - The last good value when CNN is temporarily unavailable.
@@ -15,14 +16,23 @@ Left-click the bar value to open the panel. Right-click the bar value, click
 `Source: CNN`, or press Enter/Space while the panel is focused to open CNN's
 official index page. Escape closes the panel.
 
+The widget's `Animation` setting controls the effect:
+
+- `Full` is the default playful animation.
+- `Subtle` halves the particle rate and lowers the opacity.
+- `Off` keeps the gauge completely static.
+
+Neutral readings do not show particles. Animation stops and clears as soon as
+the panel closes, so the bar does no continuous particle work in the background.
+
 There is deliberately no manual refresh. The plugin makes at most one data
 request in any rolling 24-hour period, including across shell and machine
 restarts.
 
 ## Install
 
-Requires Omarchy 4 (Quattro), `curl`, and `flock` from `util-linux`. These are
-part of a standard Omarchy installation.
+Requires Omarchy 4 (Quattro), Qt Quick Particles, Qt SVG, `curl`, and `flock`
+from `util-linux`. These are part of a standard Omarchy installation.
 
 ```bash
 omarchy plugin add https://github.com/davidojedalopez/omarchy-fear-greed.git --enable --yes
@@ -102,4 +112,3 @@ investment advice.
 Please use the repository's issue templates for reproducible bugs or CNN source
 breakage. Security concerns should be reported privately as described in
 [SECURITY.md](SECURITY.md).
-

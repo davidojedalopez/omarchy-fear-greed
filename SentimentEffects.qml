@@ -1,5 +1,4 @@
 import QtQuick 2.15
-import QtQuick.Particles 2.15
 import "Model.js" as Model
 
 Item {
@@ -15,21 +14,13 @@ Item {
   readonly property real visualIntensity: bandIntensity * modeScale
   readonly property bool fearRunning: active && effect === "fear" && modeScale > 0
   readonly property bool greedRunning: active && effect === "greed" && modeScale > 0
-  readonly property real greedEmitRate: greedRunning ? 5 * bandIntensity * modeScale : 0
-  readonly property real coinEmitRate: greedRunning ? 3 * bandIntensity * modeScale : 0
-  readonly property real particleAlpha: 0.16 + 0.24 * visualIntensity
+  readonly property int greedDropCount: greedRain.activeDropCount
+  readonly property int coinDropCount: greedRain.activeCoinCount
+  readonly property int moneyDropCount: greedRain.activeBillCount
   readonly property bool fireBedRunning: fireBed.animationsRunning
 
   visible: fearRunning || greedRunning
   clip: true
-
-  function resetInactiveSystems() {
-    if (!greedRunning) greedSystem.reset()
-  }
-
-  onActiveChanged: resetInactiveSystems()
-  onEffectChanged: resetInactiveSystems()
-  onAnimationModeChanged: resetInactiveSystems()
 
   FireBed {
     id: fireBed
@@ -38,89 +29,10 @@ Item {
     intensity: root.visualIntensity
   }
 
-  ParticleSystem {
-    id: greedSystem
+  GreedRain {
+    id: greedRain
+    anchors.fill: parent
     running: root.greedRunning
-  }
-
-  Emitter {
-    system: greedSystem
-    group: "money"
-    enabled: root.greedRunning
-    x: 0
-    y: -20
-    width: root.width
-    height: 1
-    emitRate: root.greedEmitRate
-    lifeSpan: 2450
-    lifeSpanVariation: 350
-    size: 24
-    sizeVariation: 6
-    endSize: 19
-    velocity: PointDirection {
-      y: 48
-      yVariation: 14
-      xVariation: 12
-    }
-    acceleration: PointDirection {
-      y: 18
-      xVariation: 2
-    }
-  }
-
-  ImageParticle {
-    objectName: "moneyParticles"
-    system: greedSystem
-    groups: ["money"]
-    opacity: root.greedRunning ? 1 : 0
-    source: Qt.resolvedUrl("assets/money.svg")
-    color: "#22c55e"
-    colorVariation: 0.08
-    alpha: root.particleAlpha
-    alphaVariation: 0.06
-    rotationVariation: 20
-    rotationVelocityVariation: 55
-    entryEffect: ImageParticle.Fade
-  }
-
-  Emitter {
-    system: greedSystem
-    group: "coins"
-    enabled: root.greedRunning
-    x: 0
-    y: -16
-    width: root.width
-    height: 1
-    emitRate: root.coinEmitRate
-    lifeSpan: 2200
-    lifeSpanVariation: 300
-    size: 18
-    sizeVariation: 5
-    endSize: 15
-    velocity: PointDirection {
-      y: 58
-      yVariation: 16
-      xVariation: 16
-    }
-    acceleration: PointDirection {
-      y: 22
-      xVariation: 3
-    }
-  }
-
-  ImageParticle {
-    objectName: "coinParticles"
-    system: greedSystem
-    groups: ["coins"]
-    opacity: root.greedRunning ? 1 : 0
-    source: Qt.resolvedUrl("assets/coin.svg")
-    color: "#facc15"
-    colorVariation: 0.06
-    alpha: Math.min(0.48, root.particleAlpha + 0.08)
-    alphaVariation: 0.05
-    rotationVariation: 180
-    rotationVelocity: 95
-    rotationVelocityVariation: 110
-    entryEffect: ImageParticle.Scale
+    intensity: root.visualIntensity
   }
 }

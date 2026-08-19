@@ -26,6 +26,15 @@ TestCase {
     }
   }
 
+  Component {
+    id: greedRainComponent
+
+    Plugin.GreedRain {
+      width: 330
+      height: 132
+    }
+  }
+
   function effect(properties) {
     var item = createTemporaryObject(effectsComponent, testCase, properties || {})
     verify(item !== null)
@@ -37,7 +46,9 @@ TestCase {
     verify(!item.fearRunning)
     verify(!item.greedRunning)
     verify(!item.fireBedRunning)
-    compare(item.coinEmitRate, 0)
+    compare(item.greedDropCount, 0)
+    compare(item.coinDropCount, 0)
+    compare(item.moneyDropCount, 0)
   }
 
   function test_fearRunsOnlyForFear() {
@@ -61,18 +72,16 @@ TestCase {
     verify(!item.fearRunning)
     verify(!item.fireBedRunning)
     verify(item.greedRunning)
-    verify(item.greedEmitRate >= 2)
-    verify(item.greedEmitRate <= 5)
-    verify(item.coinEmitRate >= 1.2)
-    verify(item.coinEmitRate <= 3)
+    verify(item.greedDropCount >= 12)
+    verify(item.greedDropCount <= 24)
+    verify(item.coinDropCount > item.moneyDropCount)
+    verify(item.moneyDropCount > 0)
   }
 
-  function test_subtleHalvesEmission() {
+  function test_subtleReducesRainDensity() {
     var full = effect({ score: 90, active: true, animationMode: "Full" })
     var subtle = effect({ score: 90, active: true, animationMode: "Subtle" })
-    fuzzyCompare(subtle.greedEmitRate, full.greedEmitRate / 2, 0.0001)
-    fuzzyCompare(subtle.coinEmitRate, full.coinEmitRate / 2, 0.0001)
-    verify(subtle.particleAlpha < full.particleAlpha)
+    verify(subtle.greedDropCount < full.greedDropCount)
   }
 
   function test_offDisablesAnimation() {
@@ -110,15 +119,39 @@ TestCase {
     verify(extreme.turbulenceStrength > moderate.turbulenceStrength)
   }
 
+  function test_greedRainUsesTumblingCoinDominantDensity() {
+    var moderate = createTemporaryObject(greedRainComponent, testCase,
+                                         { running: true, intensity: 0.4 })
+    var high = createTemporaryObject(greedRainComponent, testCase,
+                                     { running: true, intensity: 0.7 })
+    var extreme = createTemporaryObject(greedRainComponent, testCase,
+                                        { running: true, intensity: 1.0 })
+    verify(moderate !== null)
+    verify(high !== null)
+    verify(extreme !== null)
+    verify(String(extreme.coinSource).indexOf("assets/coin-generated.png") >= 0)
+    verify(String(extreme.moneySource).indexOf("assets/money-generated.png") >= 0)
+    verify(extreme.activeDropCount > moderate.activeDropCount)
+    verify(extreme.activeDropCount - high.activeDropCount
+           > high.activeDropCount - moderate.activeDropCount)
+    compare(extreme.activeDropCount, extreme.totalDropCount)
+    verify(extreme.activeCoinCount > extreme.activeBillCount)
+    verify(extreme.dropOpacity > moderate.dropOpacity)
+    verify(extreme.fallSpeedScale < moderate.fallSpeedScale)
+    extreme.running = false
+    compare(extreme.activeDropCount, 0)
+    verify(!extreme.animationsRunning)
+  }
+
   function test_switchingBandsResetsRunningState() {
     var item = effect({ score: 10, active: true, animationMode: "Full" })
     verify(item.fearRunning)
     item.score = 90
     tryCompare(item, "greedRunning", true)
     verify(!item.fearRunning)
-    compare(findChild(item, "moneyParticles").opacity, 1)
-    compare(findChild(item, "coinParticles").opacity, 1)
+    verify(item.coinDropCount > item.moneyDropCount)
     item.active = false
     tryCompare(item, "greedRunning", false)
+    tryCompare(item, "greedDropCount", 0)
   }
 }

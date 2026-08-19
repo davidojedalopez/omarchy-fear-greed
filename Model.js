@@ -55,6 +55,36 @@ function colorForValue(score) {
   return "#22c55e"
 }
 
+function effectForValue(score) {
+  var value = normalizedScore(score)
+  if (value < 0) return "none"
+  if (value <= 44) return "fear"
+  if (value <= 55) return "none"
+  return "greed"
+}
+
+function effectIntensityForValue(score) {
+  var value = normalizedScore(score)
+  var effect = effectForValue(value)
+  if (effect === "fear") return 0.5 + 0.5 * ((44 - value) / 44)
+  if (effect === "greed") return 0.4 + 0.6 * ((value - 56) / 44)
+  return 0
+}
+
+function normalizedAnimationMode(value) {
+  var key = String(value || "").trim().toLowerCase()
+  if (key === "off") return "Off"
+  if (key === "subtle") return "Subtle"
+  return "Full"
+}
+
+function animationModeScale(value) {
+  var mode = normalizedAnimationMode(value)
+  if (mode === "Off") return 0
+  if (mode === "Subtle") return 0.5
+  return 1
+}
+
 function comparison(label, value) {
   var score = normalizedScore(value)
   if (score < 0) return null
@@ -219,4 +249,3 @@ function refreshDelayMs(lastAttemptAt, now, interval) {
 function shouldFetch(lastAttemptAt, now, interval) {
   return refreshDelayMs(lastAttemptAt, now, interval) === 0
 }
-

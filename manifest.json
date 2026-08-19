@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "io.github.davidojedalopez.fear-greed",
   "name": "Market Fear & Greed",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "David Ojeda",
   "license": "MIT",
   "description": "The CNN US stock-market Fear & Greed Index in the Omarchy bar.",
@@ -17,7 +17,19 @@
     "description": "Show the latest US stock-market sentiment reading published by CNN.",
     "category": "Info",
     "allowMultiple": false,
-    "defaultSection": "center"
+    "defaultSection": "center",
+    "defaults": {
+      "animationMode": "Full"
+    },
+    "schema": [
+      {
+        "key": "animationMode",
+        "type": "enum",
+        "label": "Animation",
+        "options": ["Full", "Subtle", "Off"],
+        "defaultValue": "Full",
+        "description": "Control the animated flames and falling money shown behind the gauge."
+      }
+    ]
   }
 }
-

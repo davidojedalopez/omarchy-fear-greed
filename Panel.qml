@@ -1,6 +1,7 @@
 import QtQuick
 import qs.Commons
 import qs.Ui
+import "Model.js" as Model
 
 Panel {
   id: root
@@ -19,6 +20,8 @@ Panel {
   readonly property var comparisons: hasData ? hostWidget.comparisons : []
   readonly property color sentimentColor: hostWidget
     ? hostWidget.colorForValue(value) : foreground
+  readonly property string animationMode: Model.normalizedAnimationMode(
+    root.setting("animationMode", "Full"))
 
   function open() {
     root.controller.show()
@@ -80,10 +83,19 @@ Panel {
         Item {
           width: parent.width
           height: Style.space(132)
+          clip: true
+
+          SentimentEffects {
+            anchors.fill: parent
+            score: root.value
+            active: root.opened && root.hasData
+            animationMode: root.animationMode
+          }
 
           Canvas {
             id: gauge
             anchors.fill: parent
+            z: 1
 
             onWidthChanged: requestPaint()
             onHeightChanged: requestPaint()
@@ -142,6 +154,7 @@ Panel {
             anchors.horizontalCenter: parent.horizontalCenter
             y: Style.space(42)
             spacing: 0
+            z: 2
 
             Text {
               anchors.horizontalCenter: parent.horizontalCenter
@@ -165,6 +178,7 @@ Panel {
           Text {
             anchors.left: parent.left
             anchors.bottom: parent.bottom
+            z: 2
             text: "0"
             color: root.dim
             font.family: root.fontFamily
@@ -174,6 +188,7 @@ Panel {
           Text {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+            z: 2
             text: "100"
             color: root.dim
             font.family: root.fontFamily
@@ -278,4 +293,3 @@ Panel {
     }
   }
 }
-

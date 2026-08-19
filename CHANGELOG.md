@@ -4,8 +4,8 @@ All notable changes follow semantic versioning.
 
 ## 1.1.0 - 2026-08-19
 
-- Add a continuous procedural fire bed with turbulent flame generation and
-  occasional rising embers for Fear.
+- Add a continuous procedural fire bed with turbulent flame generation for
+  Fear.
 - Add falling banknotes and spinning gold coins for Greed readings.
 - Scale particle intensity with the displayed score and stop all animation when
   the panel closes.

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="990"
+     height="396"
+     viewBox="0 0 990 396"
+     preserveAspectRatio="none">
+  <title>Adjustable flame bed rig</title>
+  <desc>Twelve named flame tongues with bottom pivots for staggered QML animation.</desc>
+
+  <!--
+    Runtime note: Qt SVG displays this file as a static image. For realistic
+    movement, instantiate or translate the flame-* groups into QML items and
+    animate each around its data-pivot with different timings.
+
+    Suggested ranges:
+      rotation: -3 to 3 degrees
+      scaleY:   0.88 to 1.08
+      scaleX:   0.96 to 1.04
+      x offset: -2 to 2 px at a 330 px render width
+      opacity:  0.82 to 1.00
+  -->
+
+  <defs>
+    <linearGradient id="outer" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#fde68a"/>
+      <stop offset="0.20" stop-color="#facc15"/>
+      <stop offset="0.56" stop-color="#f97316"/>
+      <stop offset="0.84" stop-color="#ef4444"/>
+      <stop offset="1" stop-color="#991b1b"/>
+    </linearGradient>
+    <linearGradient id="middle" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#fffde7"/>
+      <stop offset="0.32" stop-color="#fde047"/>
+      <stop offset="0.72" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.42" stop-color="#fef9c3"/>
+      <stop offset="0.82" stop-color="#fde047"/>
+      <stop offset="1" stop-color="#fb923c"/>
+    </linearGradient>
+    <linearGradient id="base" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#fffde7"/>
+      <stop offset="0.28" stop-color="#fde047"/>
+      <stop offset="0.72" stop-color="#f97316"/>
+      <stop offset="1" stop-color="#b91c1c"/>
+    </linearGradient>
+
+    <g id="tongue-a">
+      <path fill="url(#outer)" d="M-58 0C-53-28-35-47-38-73c-3-29-24-46-12-82 9 25 34 34 38 59 19-26 22-55 11-85 52 40 61 91 37 133C26-31 31-15 58 0Z"/>
+      <path fill="url(#middle)" d="M-34 0c-2-21 18-34 15-54-3-15-14-24-7-42 8 15 23 21 26 37 11-15 13-32 8-49 29 27 32 57 17 82C18-15 22-7 34 0Z"/>
+      <path fill="url(#core)" d="M-15 0c0-15 12-24 9-37-2-8-8-14-4-24 7 10 17 14 17 25 8-7 10-16 7-25 17 19 11 40-4 61Z"/>
+    </g>
+    <g id="tongue-b">
+      <path fill="url(#outer)" d="M-53 0c3-27 25-43 22-68-3-25-19-40-9-70 9 20 29 28 34 50 14-21 15-45 5-68 46 35 55 80 33 118C23-23 29-11 53 0Z"/>
+      <path fill="url(#middle)" d="M-31 0c3-19 20-30 17-48-2-12-10-20-5-34 8 12 20 17 22 31 10-13 12-27 7-41 26 23 30 49 16 70C20-12 23-6 31 0Z"/>
+      <path fill="url(#core)" d="M-13 0c2-14 13-22 10-34-2-7-7-13-4-21 7 9 15 12 16 22 6-7 8-14 6-22 14 16 9 35-4 55Z"/>
+    </g>
+    <g id="tongue-c">
+      <path fill="url(#outer)" d="M-61 0c10-31 34-49 29-78-5-27-22-43-11-75 10 22 32 30 36 54 17-24 19-51 8-77 50 38 60 85 38 126C29-31 34-15 61 0Z"/>
+      <path fill="url(#middle)" d="M-36 0c6-22 25-33 21-52-3-14-13-22-7-37 9 13 22 18 25 33 10-14 12-29 7-44 28 24 32 52 17 75C20-15 24-7 36 0Z"/>
+      <path fill="url(#core)" d="M-15 0c3-15 14-23 11-36-2-8-7-14-4-23 7 10 17 13 17 24 7-7 10-15 7-24 15 18 10 37-4 59Z"/>
+    </g>
+  </defs>
+
+  <g id="rear-layer" opacity="0.48">
+    <g transform="translate(30 396) scale(1.28 0.72)"><use xlink:href="#tongue-c"/></g>
+    <g transform="translate(150 396) scale(1.32 0.80)"><use xlink:href="#tongue-a"/></g>
+    <g transform="translate(280 396) scale(1.38 0.74)"><use xlink:href="#tongue-b"/></g>
+    <g transform="translate(415 396) scale(1.42 0.82)"><use xlink:href="#tongue-c"/></g>
+    <g transform="translate(555 396) scale(1.38 0.76)"><use xlink:href="#tongue-a"/></g>
+    <g transform="translate(695 396) scale(1.42 0.83)"><use xlink:href="#tongue-b"/></g>
+    <g transform="translate(835 396) scale(1.38 0.75)"><use xlink:href="#tongue-c"/></g>
+    <g transform="translate(965 396) scale(1.30 0.81)"><use xlink:href="#tongue-a"/></g>
+  </g>
+
+  <g id="flame-01" data-pivot="18 396" transform="translate(18 396) scale(0.88 0.72)">
+    <use xlink:href="#tongue-b"/>
+  </g>
+  <g id="flame-02" data-pivot="98 396" transform="translate(98 396) scale(1.08 0.92)">
+    <use xlink:href="#tongue-a"/>
+  </g>
+  <g id="flame-03" data-pivot="182 396" transform="translate(182 396) scale(0.92 0.78)">
+    <use xlink:href="#tongue-b"/>
+  </g>
+  <g id="flame-04" data-pivot="266 396" transform="translate(266 396) scale(1.10 1.08)">
+    <use xlink:href="#tongue-c"/>
+  </g>
+  <g id="flame-05" data-pivot="355 396" transform="translate(355 396) scale(0.96 0.82)">
+    <use xlink:href="#tongue-b"/>
+  </g>
+  <g id="flame-06" data-pivot="444 396" transform="translate(444 396) scale(1.16 1.02)">
+    <use xlink:href="#tongue-a"/>
+  </g>
+  <g id="flame-07" data-pivot="535 396" transform="translate(535 396) scale(0.91 0.76)">
+    <use xlink:href="#tongue-b"/>
+  </g>
+  <g id="flame-08" data-pivot="620 396" transform="translate(620 396) scale(1.12 1.10)">
+    <use xlink:href="#tongue-c"/>
+  </g>
+  <g id="flame-09" data-pivot="711 396" transform="translate(711 396) scale(0.94 0.86)">
+    <use xlink:href="#tongue-b"/>
+  </g>
+  <g id="flame-10" data-pivot="797 396" transform="translate(797 396) scale(1.10 1.02)">
+    <use xlink:href="#tongue-a"/>
+  </g>
+  <g id="flame-11" data-pivot="886 396" transform="translate(886 396) scale(0.90 0.80)">
+    <use xlink:href="#tongue-b"/>
+  </g>
+  <g id="flame-12" data-pivot="970 396" transform="translate(970 396) scale(1.06 0.96)">
+    <use xlink:href="#tongue-c"/>
+  </g>
+
+  <path id="connected-base" fill="url(#base)" d="M0 396v-37c44-16 82-10 122-2 43 9 78 3 117-6 44-10 83-4 122 6 43 11 79 5 118-5 43-11 81-6 120 5 41 12 81 8 122-3 43-11 83-8 122 4 39 12 77 10 116 0 20-6 40-5 61 4v34Z"/>
+  <path id="base-highlight" fill="#fff7b2" opacity="0.70" d="M0 396v-10c58-13 106-7 154-1 55 7 103 3 152-4 56-8 105-5 154 2 54 8 103 7 154-1 57-9 107-8 158 1 50 8 97 7 146-1 46-8 86-6 126 4v10Z"/>
+</svg>

@@ -15,9 +15,12 @@ Item {
   readonly property real visualIntensity: bandIntensity * modeScale
   readonly property bool fearRunning: active && effect === "fear" && modeScale > 0
   readonly property bool greedRunning: active && effect === "greed" && modeScale > 0
-  readonly property real fearEmitRate: fearRunning ? 8 * bandIntensity * modeScale : 0
+  readonly property real fearEmitRate: fearRunning ? 3 * bandIntensity * modeScale : 0
   readonly property real greedEmitRate: greedRunning ? 5 * bandIntensity * modeScale : 0
+  readonly property real coinEmitRate: greedRunning ? 3 * bandIntensity * modeScale : 0
   readonly property real particleAlpha: 0.16 + 0.24 * visualIntensity
+  readonly property real emberAlpha: 0.08 + 0.16 * visualIntensity
+  readonly property bool fireBedRunning: fireBed.animationsRunning
 
   visible: fearRunning || greedRunning
   clip: true
@@ -31,21 +34,11 @@ Item {
   onEffectChanged: resetInactiveSystems()
   onAnimationModeChanged: resetInactiveSystems()
 
-  Rectangle {
-    anchors.left: parent.left
-    anchors.right: parent.right
-    anchors.bottom: parent.bottom
-    height: parent.height * 0.55
-    opacity: root.fearRunning ? 0.05 + 0.08 * root.visualIntensity : 0
-
-    gradient: Gradient {
-      GradientStop { position: 0; color: "transparent" }
-      GradientStop { position: 1; color: "#80ef4444" }
-    }
-
-    Behavior on opacity {
-      NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-    }
+  FireBed {
+    id: fireBed
+    anchors.fill: parent
+    running: root.fearRunning
+    intensity: root.visualIntensity
   }
 
   ParticleSystem {
@@ -62,15 +55,15 @@ Item {
     width: root.width
     height: 1
     emitRate: root.fearEmitRate
-    lifeSpan: 1350
-    lifeSpanVariation: 300
-    size: 23
-    sizeVariation: 8
-    endSize: 8
+    lifeSpan: 1200
+    lifeSpanVariation: 260
+    size: 7
+    sizeVariation: 3
+    endSize: 2
     velocity: PointDirection {
-      y: -68
-      yVariation: 18
-      xVariation: 11
+      y: -46
+      yVariation: 14
+      xVariation: 8
     }
     acceleration: PointDirection {
       y: -8
@@ -79,16 +72,18 @@ Item {
   }
 
   ImageParticle {
+    objectName: "fearParticles"
     system: fearSystem
     groups: ["flames"]
+    opacity: root.fearRunning ? 1 : 0
     source: Qt.resolvedUrl("assets/flame.svg")
-    color: "#f97316"
-    colorVariation: 0.12
-    alpha: root.particleAlpha
-    alphaVariation: 0.08
-    rotationVariation: 16
-    rotationVelocityVariation: 18
-    entryEffect: ImageParticle.Scale
+    color: "#fb923c"
+    colorVariation: 0.08
+    alpha: root.emberAlpha
+    alphaVariation: 0.05
+    rotationVariation: 30
+    rotationVelocityVariation: 24
+    entryEffect: ImageParticle.Fade
   }
 
   ParticleSystem {
@@ -122,8 +117,10 @@ Item {
   }
 
   ImageParticle {
+    objectName: "moneyParticles"
     system: greedSystem
     groups: ["money"]
+    opacity: root.greedRunning ? 1 : 0
     source: Qt.resolvedUrl("assets/money.svg")
     color: "#22c55e"
     colorVariation: 0.08
@@ -132,5 +129,46 @@ Item {
     rotationVariation: 20
     rotationVelocityVariation: 55
     entryEffect: ImageParticle.Fade
+  }
+
+  Emitter {
+    system: greedSystem
+    group: "coins"
+    enabled: root.greedRunning
+    x: 0
+    y: -16
+    width: root.width
+    height: 1
+    emitRate: root.coinEmitRate
+    lifeSpan: 2200
+    lifeSpanVariation: 300
+    size: 18
+    sizeVariation: 5
+    endSize: 15
+    velocity: PointDirection {
+      y: 58
+      yVariation: 16
+      xVariation: 16
+    }
+    acceleration: PointDirection {
+      y: 22
+      xVariation: 3
+    }
+  }
+
+  ImageParticle {
+    objectName: "coinParticles"
+    system: greedSystem
+    groups: ["coins"]
+    opacity: root.greedRunning ? 1 : 0
+    source: Qt.resolvedUrl("assets/coin.svg")
+    color: "#facc15"
+    colorVariation: 0.06
+    alpha: Math.min(0.48, root.particleAlpha + 0.08)
+    alphaVariation: 0.05
+    rotationVariation: 180
+    rotationVelocity: 95
+    rotationVelocityVariation: 110
+    entryEffect: ImageParticle.Scale
   }
 }

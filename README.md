@@ -7,7 +7,8 @@ An Omarchy bar widget for the US stock-market Fear & Greed Index published by CN
 ## What it shows
 
 - The latest index as a color-coded gauge.
-- Animated flames for Fear and falling money for Greed while the panel is open.
+- A glowing, continuously moving fire bed for Fear readings.
+- Falling banknotes and spinning gold coins for Greed readings.
 - Previous close, one week ago, one month ago, and one year ago as colored numbers.
 - CNN's publication timestamp so weekends and market holidays are clear.
 - The last good value when CNN is temporarily unavailable.

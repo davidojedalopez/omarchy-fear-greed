@@ -15,6 +15,7 @@ Window {
   property int scoreIndex: 0
   property var modes: ["Full", "Subtle", "Off"]
   property int modeIndex: 0
+  property string capturePath: ""
   readonly property int score: scores[scoreIndex]
   readonly property string animationMode: modes[modeIndex]
 
@@ -29,13 +30,25 @@ Window {
   function applyArguments() {
     var args = Qt.application.arguments
     for (var i = 1; i < args.length; i++) {
+      if (String(args[i]).indexOf("--capture=") === 0) {
+        capturePath = String(args[i]).slice(10)
+        continue
+      }
       var requestedScore = Number(args[i])
       var requestedIndex = scores.indexOf(requestedScore)
-      if (requestedIndex >= 0) {
-        scoreIndex = requestedIndex
-        return
-      }
+      if (requestedIndex >= 0) scoreIndex = requestedIndex
     }
+  }
+
+  Timer {
+    interval: 1200
+    running: root.capturePath !== ""
+    repeat: false
+    onTriggered: stage.grabToImage(function(result) {
+      if (!result.saveToFile(root.capturePath))
+        console.error("Could not save preview capture: " + root.capturePath)
+      Qt.quit()
+    })
   }
 
   Item {

@@ -40,9 +40,15 @@ jobs:
           test -f BarWidget.qml
           test -f Panel.qml
           test -f SentimentEffects.qml
+          test -f FireBed.qml
           test -f Model.js
+          test -f assets/flame-bed.svg
+          test -f assets/flame-bed-rig.svg
           test -f assets/flame.svg
           test -f assets/money.svg
+          test -f assets/coin.svg
+          test -f shaders/flame-warp.frag
+          test -s shaders/flame-warp.frag.qsb
           test -f README.md
           test -f LICENSE
           test -z "$(find . -path ./.git -prune -o -type l -print -quit)"

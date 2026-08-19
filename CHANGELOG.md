@@ -4,7 +4,9 @@ All notable changes follow semantic versioning.
 
 ## 1.1.0 - 2026-08-19
 
-- Add animated flames for Fear and falling money for Greed readings.
+- Add a continuous procedural fire bed with turbulent flame generation and
+  occasional rising embers for Fear.
+- Add falling banknotes and spinning gold coins for Greed readings.
 - Scale particle intensity with the displayed score and stop all animation when
   the panel closes.
 - Add Full, Subtle, and Off animation settings.

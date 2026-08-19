@@ -44,7 +44,6 @@ jobs:
           test -f Model.js
           test -f assets/flame-bed.svg
           test -f assets/flame-bed-rig.svg
-          test -f assets/flame.svg
           test -f assets/money.svg
           test -f assets/coin.svg
           test -f shaders/flame-warp.frag

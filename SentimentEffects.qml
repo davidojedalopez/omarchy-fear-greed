@@ -15,18 +15,15 @@ Item {
   readonly property real visualIntensity: bandIntensity * modeScale
   readonly property bool fearRunning: active && effect === "fear" && modeScale > 0
   readonly property bool greedRunning: active && effect === "greed" && modeScale > 0
-  readonly property real fearEmitRate: fearRunning ? 3 * bandIntensity * modeScale : 0
   readonly property real greedEmitRate: greedRunning ? 5 * bandIntensity * modeScale : 0
   readonly property real coinEmitRate: greedRunning ? 3 * bandIntensity * modeScale : 0
   readonly property real particleAlpha: 0.16 + 0.24 * visualIntensity
-  readonly property real emberAlpha: 0.08 + 0.16 * visualIntensity
   readonly property bool fireBedRunning: fireBed.animationsRunning
 
   visible: fearRunning || greedRunning
   clip: true
 
   function resetInactiveSystems() {
-    if (!fearRunning) fearSystem.reset()
     if (!greedRunning) greedSystem.reset()
   }
 
@@ -39,51 +36,6 @@ Item {
     anchors.fill: parent
     running: root.fearRunning
     intensity: root.visualIntensity
-  }
-
-  ParticleSystem {
-    id: fearSystem
-    running: root.fearRunning
-  }
-
-  Emitter {
-    system: fearSystem
-    group: "flames"
-    enabled: root.fearRunning
-    x: 0
-    y: root.height - 2
-    width: root.width
-    height: 1
-    emitRate: root.fearEmitRate
-    lifeSpan: 1200
-    lifeSpanVariation: 260
-    size: 7
-    sizeVariation: 3
-    endSize: 2
-    velocity: PointDirection {
-      y: -46
-      yVariation: 14
-      xVariation: 8
-    }
-    acceleration: PointDirection {
-      y: -8
-      xVariation: 3
-    }
-  }
-
-  ImageParticle {
-    objectName: "fearParticles"
-    system: fearSystem
-    groups: ["flames"]
-    opacity: root.fearRunning ? 1 : 0
-    source: Qt.resolvedUrl("assets/flame.svg")
-    color: "#fb923c"
-    colorVariation: 0.08
-    alpha: root.emberAlpha
-    alphaVariation: 0.05
-    rotationVariation: 30
-    rotationVelocityVariation: 24
-    entryEffect: ImageParticle.Fade
   }
 
   ParticleSystem {

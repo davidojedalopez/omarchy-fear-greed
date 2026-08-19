@@ -37,7 +37,6 @@ TestCase {
     verify(!item.fearRunning)
     verify(!item.greedRunning)
     verify(!item.fireBedRunning)
-    compare(item.fearEmitRate, 0)
     compare(item.coinEmitRate, 0)
   }
 
@@ -47,8 +46,6 @@ TestCase {
     verify(item.fearRunning)
     verify(item.fireBedRunning)
     verify(!item.greedRunning)
-    verify(item.fearEmitRate >= 1.5)
-    verify(item.fearEmitRate <= 3)
   }
 
   function test_neutralDoesNotRun() {
@@ -104,11 +101,9 @@ TestCase {
   function test_switchingBandsResetsRunningState() {
     var item = effect({ score: 10, active: true, animationMode: "Full" })
     verify(item.fearRunning)
-    compare(findChild(item, "fearParticles").opacity, 1)
     item.score = 90
     tryCompare(item, "greedRunning", true)
     verify(!item.fearRunning)
-    compare(findChild(item, "fearParticles").opacity, 0)
     compare(findChild(item, "moneyParticles").opacity, 1)
     compare(findChild(item, "coinParticles").opacity, 1)
     item.active = false

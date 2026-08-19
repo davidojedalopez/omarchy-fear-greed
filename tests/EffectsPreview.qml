@@ -11,7 +11,7 @@ Window {
   color: "#09090b"
   title: "Fear & Greed Effects Preview"
 
-  property var scores: [10, 35, 50, 65, 90]
+  property var scores: [10, 35, 50, 65, 90, 100]
   property int scoreIndex: 0
   property var modes: ["Full", "Subtle", "Off"]
   property int modeIndex: 0
@@ -60,7 +60,7 @@ Window {
     }
 
     Keys.onPressed: function(event) {
-      if (event.key >= Qt.Key_1 && event.key <= Qt.Key_5) {
+      if (event.key >= Qt.Key_1 && event.key <= Qt.Key_6) {
         root.scoreIndex = event.key - Qt.Key_1
         event.accepted = true
       } else if (event.key === Qt.Key_Space) {
@@ -108,7 +108,7 @@ Window {
       anchors.topMargin: 16
       anchors.horizontalCenter: parent.horizontalCenter
       text: "Animation: " + root.animationMode
-        + "  ·  click for score  ·  Space for mode  ·  keys 1–5"
+        + "  ·  click for score  ·  Space for mode  ·  keys 1–6"
       color: "#a1a1aa"
       font.pixelSize: 12
     }

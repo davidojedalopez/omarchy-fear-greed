@@ -6,7 +6,8 @@ All notable changes follow semantic versioning.
 
 - Add a continuous procedural fire bed with turbulent flame generation for
   Fear.
-- Add falling banknotes and spinning gold coins for Greed readings.
+- Add dense, tumbling gold-coin rain with occasional fluttering banknotes for
+  Greed readings.
 - Scale particle intensity with the displayed score and stop all animation when
   the panel closes.
 - Add Full, Subtle, and Off animation settings.

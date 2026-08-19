@@ -8,7 +8,7 @@ An Omarchy bar widget for the US stock-market Fear & Greed Index published by CN
 
 - The latest index as a color-coded gauge.
 - A glowing, continuously moving fire bed for Fear readings.
-- Falling banknotes and spinning gold coins for Greed readings.
+- Tumbling gold coins with occasional fluttering banknotes for Greed readings.
 - Previous close, one week ago, one month ago, and one year ago as colored numbers.
 - CNN's publication timestamp so weekends and market holidays are clear.
 - The last good value when CNN is temporarily unavailable.
@@ -32,7 +32,7 @@ restarts.
 
 ## Install
 
-Requires Omarchy 4 (Quattro), Qt Quick Particles, Qt SVG, `curl`, and `flock`
+Requires Omarchy 4 (Quattro), Qt SVG, `curl`, and `flock`
 from `util-linux`. These are part of a standard Omarchy installation.
 
 ```bash

@@ -4,6 +4,20 @@ An Omarchy bar widget for the US stock-market Fear & Greed Index published by CN
 
 ![Market Fear & Greed panel](preview.png)
 
+## Animation showcase
+
+These representative readings use the default `Full` animation mode. Neutral
+is intentionally still, while Fear and Greed become more intense toward their
+extremes.
+
+| Extreme Fear · 10 | Fear · 35 |
+|:---:|:---:|
+| ![Extreme Fear with a tall, turbulent fire bed](showcase/extreme-fear.gif) | ![Fear with a lower moving fire bed](showcase/fear.gif) |
+| **Neutral · 50** | **Greed · 65** |
+| ![Neutral state without particles](showcase/neutral.gif) | ![Greed with falling coins and banknotes](showcase/greed.gif) |
+| **Extreme Greed · 100** | |
+| ![Extreme Greed with dense falling coins and banknotes](showcase/extreme-greed.gif) | |
+
 ## What it shows
 
 - The latest index as a color-coded gauge.

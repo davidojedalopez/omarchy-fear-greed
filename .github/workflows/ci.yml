@@ -46,6 +46,12 @@ jobs:
           test -f assets/flame-bed-rig.svg
           test -f assets/money-generated.png
           test -f assets/coin-generated.png
+          test -s preview.png
+          test -s showcase/extreme-fear.gif
+          test -s showcase/fear.gif
+          test -s showcase/neutral.gif
+          test -s showcase/greed.gif
+          test -s showcase/extreme-greed.gif
           test -f shaders/flame-warp.frag
           test -s shaders/flame-warp.frag.qsb
           test -f README.md

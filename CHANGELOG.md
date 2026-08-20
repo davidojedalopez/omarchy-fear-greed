@@ -10,8 +10,11 @@ All notable changes follow semantic versioning.
   Greed readings.
 - Scale particle intensity with the displayed score and stop all animation when
   the panel closes.
+- Replace the thin gauge with labeled radial bands, an active sentiment band,
+  and a shorter straight-edged arrow needle.
 - Add Full, Subtle, and Off animation settings.
-- Add an isolated effects preview and component-level animation tests.
+- Add an isolated effects preview, animated state showcases, and component-level
+  animation tests.
 
 ## 1.0.0 - 2026-08-16
 
